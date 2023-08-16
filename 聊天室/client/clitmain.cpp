@@ -1,7 +1,8 @@
 #include"clit.hpp"
 #include "public.hpp"
-int main()
+int main(int argc ,char **argv)
 {
-    Clenit c(SERVERPORT,"127.0.0.1");
+    
+    Clenit c(SERVERPORT,argv[1]);
     c.clirun();
-}
+}    
