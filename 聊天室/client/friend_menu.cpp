@@ -211,6 +211,11 @@ void Clenit::friendrequests(string ID)
         {
             break;
         }
+        if (!rlist.isMember(in))
+        {
+            std::cout << "该用户不在申请列表内，请重试" << endl;
+            continue;
+        }
         std::cout << "请你输入你要处理的选项(accapt或refuse)" << endl;
         while (1)
         {

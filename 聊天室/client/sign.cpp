@@ -208,8 +208,9 @@ int Clenit::sign_up()
             }
             else
             {
-                continue;
-            }
+
+                std::cout << "两次密码输入不同，请再次输入" << endl;
+            } 
         }
     }
     std::cout << "请设置您的验证问题" << endl;
@@ -219,15 +220,13 @@ int Clenit::sign_up()
     while (1)
     {
 
-        std::cout << "请再次输入您设置的问题" << endl;
+        std::cout << "请再次输入您验证问题的答案" << endl;
         std::cin >> Answer2;
         if (Answer1 == Answer2)
         {
             break;
-        }
-        else
-        {
-            continue;
+        }else{
+            std::cout << "两次答案输入不同，请再次输入" << endl;
         }
     }
     info["Name"] = name;
