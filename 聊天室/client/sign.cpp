@@ -45,13 +45,13 @@ int Clenit::login()
         r=Err::recvMsg(cfd);
         if (r.length() > 0)
         {
-            if (stoi(r) == -1234567)
+            if (r == "-1234567")
             {
 
                 std::cout << "用户不存在,请您先注册账号" << endl;
                 sign_up();
                 break;
-            }else if(stoi(r) == -7654321)
+            }else if(r == "-7654321")
             {
                 std::cout << "该用户已登陆,请再试一次" << endl;
                 break;

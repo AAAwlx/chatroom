@@ -131,6 +131,22 @@ void Server::serun()
                     cout << "为" << sfd << "创建线程" << endl;
                     fd_pthread[sfd] = true;
                     chile_t.detach();
+                }else if ((ep[i].events & EPOLLHUP) || (ep[i].events & EPOLLERR)) {
+                    // 连接关闭或发生错误
+                    int closedSocket = ep[i].data.fd;
+                    cout << "客户端 " << closedSocket << " 终止。" << endl;
+                    Err::Epoll_ctl(efd, EPOLL_CTL_DEL, closedSocket, NULL); // 从 epoll 中移除
+                    Err::Close(closedSocket); // 关闭套接字
+                    fd_arr[closedSocket] = false;
+                    fd_pthread[closedSocket] = false;
+                    auto it = user_cfd.begin();
+                    while (it != user_cfd.end()) {
+                        if (it->second == closedSocket) {
+                            it = user_cfd.erase(it); // 删除匹配值的键值对，并返回下一个迭代器
+                        } else {
+                            ++it;
+                        }
+                    }
                 }
             }
         }

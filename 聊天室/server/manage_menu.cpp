@@ -357,7 +357,7 @@ void Server::grouprecover(int cfd)
     }
     Err::sendMsg(cfd, r.c_str(), r.length());
 }
-void Server::transfer_group(int cfd)
+bool Server::transfer_group(int cfd)
 {
     string s;
     while (1)
@@ -375,7 +375,7 @@ void Server::transfer_group(int cfd)
     Group g(groupid, Library);
     string r;
     if(g.member_List.isMember(tra_id)){
-        r=="Succeed";
+        r="Succeed";
         g.Modify_permissions(tra_id,2);
         g.Modify_permissions(ID,0);
         try
@@ -395,6 +395,12 @@ void Server::transfer_group(int cfd)
         r="NULL";
     }
     Err::sendMsg(cfd,r.c_str(),r.length());
+    if (r == "Succeed")
+    {
+        return true;
+    }else{
+        return false;
+    }
 }
 bool Server::man_delgroup(int cfd)
 {
@@ -415,15 +421,16 @@ bool Server::man_delgroup(int cfd)
     Json::Value::Members members = g.member_List.getMemberNames();
     for (const auto &key : g.member_List.getMemberNames())
     {
+        
         User u(key,Library);
         u.delete_group(groupid);
         try
-        {
-            Value j;
+        {   
+            Value j; 
             int cfd2 = user_cfd.at(key);
             j["groupid"] = groupid;
             Massage m3("man_delgroup", j, "0", "0");
-            Err::sendMsg(cfd2, m3.Serialization().c_str(), m3.Serialization().length()); // 如果在线，通知申请人申请已经通过
+            Err::sendMsg(cfd2, m3.Serialization().c_str(), m3.Serialization().length()); 
             std::cout << m3.Serialization() << endl;
         }
         catch (const std::out_of_range &e)
@@ -431,11 +438,15 @@ bool Server::man_delgroup(int cfd)
             std::cout << "Key not found." << std::endl;
         }
     }
+    Value j1;
+    j1["return"]="Succeed";
+    Massage m2(MAN_DELGROUP,j1,"0","0");
+    Err::sendMsg(cfd,m2.Serialization().c_str(),m2.Serialization().length());
     redisReply *reply = (redisReply *)redisCommand(Library, "HDEL Group %s",groupid.c_str());
     freeReplyObject(reply);
     return true;
 }
-void Server::manage_menu0(int cfd)
+void Server::manage_menu2(int cfd)
 {
     cout << cfd << "已进入群管理界面" << endl;
     string s;
@@ -474,7 +485,11 @@ void Server::manage_menu0(int cfd)
             }
             else if (s == TRA_GROUP)
             {
-                Server::transfer_group(cfd);
+                bool del=Server::transfer_group(cfd); 
+                if (del)
+                {
+                    break;
+                }
             }
             else if (s == MAN_ADDMEMBER)
             {
@@ -487,6 +502,76 @@ void Server::manage_menu0(int cfd)
                 {
                     break;
                 }
+            }
+            else if (s == EXIT)
+            {
+
+                break;
+            }
+        }
+    }
+}
+void Server::manage_menu0(int cfd)
+{
+    cout << cfd << "已进入群管理界面" << endl;
+    string s;
+    while (1)
+    {
+        s = Err::recvMsg(cfd);
+        if (s.length() > 0)
+        {
+            if (s == MAN_VIEW)
+            {
+                Server::man_view(cfd);
+            }
+            else if (s == IGN_GROUP)
+            {
+                Server::ignoregroup(cfd);
+            }
+            else if (s == REC_GROUP)
+            {
+                Server::grouprecover(cfd);
+            }
+            else if (s == EXIT)
+            {
+
+                break;
+            }
+        }
+    }
+}
+void Server::manage_menu1(int cfd)
+{
+    cout << cfd << "已进入群管理界面" << endl;
+    string s;
+    while (1)
+    {
+        s = Err::recvMsg(cfd);
+        if (s.length() > 0)
+        {
+            if (s == MAN_ADDGROUP)
+            {
+                Server::man_addgroup(cfd);
+            }
+            else if (s == MAN_VIEW)
+            {
+                Server::man_view(cfd);
+            }
+            else if (s == MAN_QUITMEMBER)
+            {
+                Server::man_delmember(cfd);
+            }
+            else if (s == IGN_GROUP)
+            {
+                Server::ignoregroup(cfd);
+            }
+            else if (s == REC_GROUP)
+            {
+                Server::grouprecover(cfd);
+            }
+            else if (s == MAN_ADDMEMBER)
+            {
+                Server::man_addmember(cfd);
             }
             else if (s == EXIT)
             {

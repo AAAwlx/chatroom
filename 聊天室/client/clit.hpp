@@ -120,7 +120,7 @@ public:
     bool man_delgroup(string ID,string man_groupid);          //解散群
     void ignoregroup(string ID,string man_groupid);//屏蔽群
     void grouprecover(string ID,string man_groupid);//接收群消息
-    void transfer_group(string ID,string man_groupid);//转让群主
+    bool transfer_group(string ID,string man_groupid);//转让群主
     void man_addmember(string ID,string man_groupid);//添加成员
     //文件收发
     void file_menu(string ID);

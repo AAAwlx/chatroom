@@ -290,7 +290,7 @@ void Clenit::grouprecover(string ID, string man_groupid)
         std::cout << "你尚未将id为" << man_groupid << "屏蔽" << endl;
     }
 }
-void Clenit::transfer_group(string ID, string man_groupid)
+bool Clenit::transfer_group(string ID, string man_groupid)
 {
     string in;
     cout << "请输入转让对象的id" << endl;
@@ -299,7 +299,7 @@ void Clenit::transfer_group(string ID, string man_groupid)
     if (in == ID)
     {
         cout << "不能转让给自己" << endl;
-        return;
+        return false;
     }
     j["groupid"] = man_groupid;
     j["ID"] = ID;
@@ -318,10 +318,14 @@ void Clenit::transfer_group(string ID, string man_groupid)
     if (r == "Succeed")
     {
         std::cout << "你已将群主转移给id为" << in << "的用户已" << endl;
+        return true;
     }
     else if (r == "NULL")
     {
         std::cout << "id为" << in << "还不是群成员" << endl;
+        return false;
+    }else{
+        return false;
     }
 }
 bool Clenit::man_delgroup(string ID, string man_groupid)
@@ -448,7 +452,11 @@ void Clenit::manage_menu2(string ID, string man_groupid)
         }
         else if (in == TRA_GROUP)
         {
-            Clenit::transfer_group(ID, man_groupid);
+            bool del = Clenit::transfer_group(ID, man_groupid);
+            if (del)
+            {
+                break;
+            }
         }
         else if (in == MAN_ADDMEMBER)
         {

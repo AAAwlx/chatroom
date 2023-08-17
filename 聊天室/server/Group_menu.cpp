@@ -127,6 +127,7 @@ void Server::quit_group(int cfd)
                     catch (const std::out_of_range &e)
                     {
                         std::cout << "Key not found." << std::endl;
+                        r = "Succeed";
                     }
                 }
             }
@@ -247,7 +248,13 @@ void Server::manage_menu(int cfd)
         }
         Massage m1("0", j, "0", "0");
         Err::sendMsg(cfd, m1.Serialization().c_str(), m1.Serialization().length());
-        manage_menu0(cfd);
+        if(r=="0"){
+            Server::manage_menu0(cfd);
+        }else if(r=="1"){
+            Server::manage_menu1(cfd);
+        }else if(r=="2"){
+            Server::manage_menu2(cfd);
+        }
     }
     else
     {

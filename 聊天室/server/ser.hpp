@@ -108,6 +108,8 @@ public:
     static void chat_forwarding(int cfd);
     static void manage_menu(int cfd);
     static void manage_menu0(int cfd);
+    static void manage_menu1(int cfd);
+    static void manage_menu2(int cfd);
     static void history_group(int cfd);//查看群历史消息
     static void historicalnewsg(int cfd,string ID);//进入群菜单提醒
     //管理群
@@ -119,12 +121,13 @@ public:
     static bool man_delgroup(int cfd);          //解散群
     static void ignoregroup(int cfd);//屏蔽群
     static void grouprecover(int cfd);//解除屏蔽
-    static void transfer_group(int cfd);//转让群主
+    static bool transfer_group(int cfd);//转让群主
     static void man_addmember(int cfd);//添加成员
     //文件
     static void file_menu(int cfd);
     static void file_send(int cfd,Massage m);
     static void file_recv(int cfd,Massage m);
+    
 };
 
 #endif
