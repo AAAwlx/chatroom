@@ -155,7 +155,7 @@ void Clenit::file_recv(string ID)
         string filesize = m3.Deserialization("filesize");
         string path;
         cin >> path;
-        path+=name;
+        path=path+"/"+name;
         int fd;
         while (1)
         {
@@ -164,6 +164,7 @@ void Clenit::file_recv(string ID)
             {
                 cout << "无效的路径,请重新选择" << endl;
                 cin >> path;
+                path+=name;
             }
             else
             {
@@ -175,6 +176,7 @@ void Clenit::file_recv(string ID)
         long sum2 = 0;
         qmutex.lock();
         char recvbuf[BUFSIZ];
+        Err::sendMsg(cfd,"0",sizeof("0"));
         while (true)
         {
             

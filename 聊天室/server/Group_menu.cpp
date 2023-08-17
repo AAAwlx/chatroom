@@ -53,7 +53,7 @@ void Server::add_group(int cfd)
                 }
             }
         }
-        r = "Succeed"; 
+        r = "Succeed";
         NEW_groupid += "gr"; // 将该加群请求存入redis中
         redisReply *reply = (redisReply *)redisCommand(Library, "LRANGE %s 0 -1", NEW_groupid.c_str());
         bool valueExists = false;
@@ -228,7 +228,7 @@ void Server::manage_menu(int cfd)
         if (r == "1" || r == "2")
         {
             Value j2;
-            string s2 = man_groupid + "gr";                                                                   // 私聊消息
+            string s2 = man_groupid + "gr";                                                         // 私聊消息
             redisReply *reply2 = (redisReply *)redisCommand(Library, "LRANGE %s 0 -1", s2.c_str()); // 获取存有聊天记录的列表
             if (reply2 != nullptr)
             {
@@ -243,7 +243,7 @@ void Server::manage_menu(int cfd)
                     }
                 }
             }
-            j["massage"] =j2;
+            j["massage"] = j2;
         }
         Massage m1("0", j, "0", "0");
         Err::sendMsg(cfd, m1.Serialization().c_str(), m1.Serialization().length());
@@ -359,34 +359,44 @@ void Server::history_group(int cfd)
     Massage m(s);
     string ID = m.Deserialization("ID");
     string groupid = m.Deserialization("groupid");
-    Group g(ID, Library);
-    if (g.member_List.isMember(ID)) // 是否是好友
-    {
-        redisReply *reply = (redisReply *)redisCommand(Library, "LRANGE %s 0 -1", groupid.c_str());
-        for (size_t i = 0; i < reply->elements; i++)
-        {
-            redisReply *element = reply->element[i];
-            if (element->type == REDIS_REPLY_STRING)
-            {
-                std::string massage(element->str, element->len);
-                Massage m1(massage);
-                std::variant<Json::Value, std::string> result1 = m1.takeMassage("from");
-                string from = std::get<std::string>(result1);
-                info[from] = massage;
-            }
-        }
-        r = "Succeed";
-    }
-    else
+    User u(ID, Library);
+    if (!u.group_List.isMember(groupid))
     {
         r = "NULL";
     }
+    else
+    {
+        Group g(ID, Library);
+
+        if (g.member_List.isMember(ID))
+        {
+            redisReply *reply = (redisReply *)redisCommand(Library, "LRANGE %s 0 -1", groupid.c_str());
+            for (size_t i = 0; i < reply->elements; i++)
+            {
+                redisReply *element = reply->element[i];
+                if (element->type == REDIS_REPLY_STRING)
+                {
+                    std::string massage(element->str, element->len);
+                    Massage m1(massage);
+                    std::variant<Json::Value, std::string> result1 = m1.takeMassage("from");
+                    string from = std::get<std::string>(result1);
+                    info[from] = massage;
+                }
+            }
+            r = "Succeed";
+        }
+        else
+        {
+            r = "NULL";
+        }
+    }
+
     Massage m2(r, info, "0", "0");
     Err::sendMsg(cfd, m2.Serialization().c_str(), m2.Serialization().length());
 }
 void Server::group_menu(int cfd)
 {
-    
+
     string s;
     while (1)
     {

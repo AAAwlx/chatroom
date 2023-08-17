@@ -23,7 +23,6 @@ void Server::login(int cfd,Massage m)//登陆
     }else{
         Pass2=u.Inquire("Pass");
     }
-    
     cout<<Pass2<<endl;
     Err::sendMsg(cfd,Pass2.c_str(),Pass2.size());
 }

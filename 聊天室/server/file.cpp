@@ -191,14 +191,21 @@ void Server::file_recv(int cfd, Massage m)
     j1["return"] = "succeed";
     j1["filesize"] = reply2->str;
     freeReplyObject(reply2); 
-    Massage m3(RECV_FILE,j,"0","0");
+    Massage m3(RECV_FILE,j1,"0","0");
     string mas1=m3.Serialization();
     Err::sendMsg(cfd,mas1.c_str(),mas1.length());
-    Massage m2("recv_file",nullptr,"0","0");
+    Massage m2("recv_file",j1,"0","0");
     string msg=m2.Serialization();
     Err::sendMsg(cfd,msg.c_str(),msg.length());
     int fd = open(filepath.c_str(), O_RDONLY);
     off_t offset = 0;
+    while (1)
+    {
+        string a = Err::recvMsg(cfd);
+        if(a.length()>0){
+            break;
+        }
+    }
     cout << "文件传输开始，请耐心等待" << endl;
     ssize_t sent;
     user_cfd.erase(id);

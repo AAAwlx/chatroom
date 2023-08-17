@@ -196,6 +196,10 @@ void Server::friendrequests(int cfd, Massage m)
     string s1 = m1.Serialization();
     cout<<s1<<endl;
     Err::sendMsg(cfd, s1.c_str(), s1.length()); // 将待处理的请求发送到客户端
+    if (info.empty())
+    {
+        return;
+    }
     string r;
     while (1)
     {

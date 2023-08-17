@@ -236,7 +236,7 @@ void Clenit::history_group(string ID)
     Massage m(GROUP_HISTORY, j, "0", "0");
     string s = m.Serialization();
     Err::sendMsg(cfd, s.c_str(), s.length());
-    std::cout << "已发送聊天请求" << endl;
+    std::cout << "已发送查看历史请求" << endl;
     std::unique_lock<std::mutex> lock(qmutex);
     queueCondVar.wait(lock, []
                       { return !masqueue.empty(); });
@@ -246,7 +246,7 @@ void Clenit::history_group(string ID)
     Massage m1(r);
     std::variant<Json::Value, std::string> result1 = m1.takeMassage("option");
     string o = std::get<std::string>(result1);
-    if (r == "Succeed")
+    if (o == "Succeed")
     {
         std::variant<Json::Value, std::string> result2 = m1.takeMassage("content");
         Value chatlist = std::get<Json::Value>(result2);
@@ -258,7 +258,7 @@ void Clenit::history_group(string ID)
             std::cout << m2.Deserialization("massage") << endl;
         }
     }
-    else if (r == "NULL")
+    else if (o == "NULL")
     {
         std::cout << "你还未进入" << in << "请输入正确id" << endl;
     }

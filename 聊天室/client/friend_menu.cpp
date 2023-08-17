@@ -110,7 +110,9 @@ void Clenit::ignorefriend(string ID)
     else if (r == "Succeed")
     {
         std::cout << "你已将id为" << in << "的用户已成功屏蔽" << endl;
-    }if(r=="blocked"){
+    }
+    if (r == "blocked")
+    {
         std::cout << "你已将id为" << in << "请勿重复操作" << endl;
     }
 }
@@ -145,7 +147,7 @@ void Clenit::friendrecover(string ID)
     }
     else if (r == "not_blocked")
     {
-       std::cout << "你尚未将id为" << in << "屏蔽" << endl;
+        std::cout << "你尚未将id为" << in << "屏蔽" << endl;
     }
 }
 void Clenit::viewfriend(string ID)
@@ -166,9 +168,12 @@ void Clenit::viewfriend(string ID)
     Massage m1(r);
     std::variant<Json::Value, std::string> result = m1.takeMassage("content");
     Value flist = std::get<Json::Value>(result);
-    if(flist.empty()){
-        cout<<"你还没有好友，快去添加吧"<<endl;
-    }else{
+    if (flist.empty())
+    {
+        cout << "你还没有好友，快去添加吧" << endl;
+    }
+    else
+    {
         Json::Value::Members members = flist.getMemberNames();
         for (const auto &key : members)
         {
@@ -195,50 +200,53 @@ void Clenit::friendrequests(string ID)
     Massage m1(r);
     std::variant<Json::Value, std::string> result = m1.takeMassage("content");
     Value rlist = std::get<Json::Value>(result);
-    if(rlist.empty()){
-        cout<<"无好友申请"<<endl;
+    if (rlist.empty())
+    {
+        cout << "无好友申请" << endl;
         return;
     }
-    Json::Value::Members members = rlist.getMemberNames();
-    for (const auto &key : rlist.getMemberNames())
+    else
     {
-        std::cout << "id为: " << key << "请求添加你为好友" << std::endl;
-    }
-    
-    Value info;
-    while (1)
-    {
-        string in, o;
-        std::cout << "请你输入你要处理的好友(输入-1结束)" << endl;
-        std::cin >> in;
-        if (in == "-1")
+        Json::Value::Members members = rlist.getMemberNames();
+        for (const auto &key : rlist.getMemberNames())
         {
-            break;
+            std::cout << "id为: " << key << "请求添加你为好友" << std::endl;
         }
-        if (!rlist.isMember(in))
-        {
-            std::cout << "该用户不在申请列表内，请重试" << endl;
-            continue;
-        }
-        std::cout << "请你输入你要处理的选项(accapt或refuse)" << endl;
+        Value info;
         while (1)
         {
-            std::cin >> o;
-            if (o != "accapt" && o != "refuse" && o != "-1")
-            {
-                std::cout << "您输入的选项不符合规范，请再试一次" << endl;
-            }
-            else
+            string in, o;
+            std::cout << "请你输入你要处理的好友(输入-1结束)" << endl;
+            std::cin >> in;
+            if (in == "-1")
             {
                 break;
             }
+            if (!rlist.isMember(in))
+            {
+                std::cout << "该用户不在申请列表内，请重试" << endl;
+                continue;
+            }
+            std::cout << "请你输入你要处理的选项(accapt或refuse)" << endl;
+            while (1)
+            {
+                std::cin >> o;
+                if (o != "accapt" && o != "refuse" && o != "-1")
+                {
+                    std::cout << "您输入的选项不符合规范，请再试一次" << endl;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            info[in] = o;
         }
-        info[in] = o;
+        Massage m2(MAS_FRIEND, info, "0", "0");
+        string s1 = m2.Serialization();
+        Err::sendMsg(cfd, s1.c_str(), s.length());
+        std::cout << s1 << endl;
     }
-    Massage m2(MAS_FRIEND, info, "0", "0");
-    string s1 = m2.Serialization();
-    Err::sendMsg(cfd, s1.c_str(), s.length());
-    std::cout << s1 << endl;
 }
 
 void Clenit::friends_menu(string ID)
