@@ -258,7 +258,7 @@ void Clenit::Exit()
     Massage m(EXIT, j, "0", "0");
     string s = m.Serialization();
     Err::sendMsg(cfd, s.c_str(), s.length());
-    std::cout << s << endl;
+    //std::cout << s << endl;
 }
 
 void Clenit::sign_menu()

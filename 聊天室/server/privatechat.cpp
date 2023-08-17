@@ -21,7 +21,6 @@ void Server::directsend(int cfd, Massage m, string massage)
             freeReplyObject(reply);
             try
             {
-                
                 int cfd2 = user_cfd.at(to_id);
                 Err::sendMsg(cfd2, massage.c_str(), massage.length());
                 r = "Succeed";
@@ -101,7 +100,10 @@ void Server::pchatspace(int cfd, Massage m)
             else if (o == "Pchat_space")
             {
                 string listname = myID + friendID;
-                redisReply *reply = static_cast<redisReply *>(redisCommand(Library, "LPUSH %s %s", listname.c_str(), r)); // 长期存储历史聊天记录
+                std::variant<Json::Value, std::string> result1 = m2.takeMassage("Time");
+                std::string t = std::get<std::string>(result1);
+                string s = t + ":" + m2.Deserialization("massage");
+                redisReply *reply = (redisReply *) redisCommand(Library, "LPUSH %s %s", listname.c_str(), s.c_str()); // 长期存储历史聊天记录
                 freeReplyObject(reply);
                 if (user_cfd.count(friendID))
                 {
@@ -112,8 +114,8 @@ void Server::pchatspace(int cfd, Massage m)
                 else
                 { // 如果不在线存入未处理消息列表
                     friendID += "c";
-                    string s = myID + ":" + m.Deserialization("massage");
-                    redisReply *reply2 = static_cast<redisReply *>(redisCommand(Library, "LPUSH %s %s", friendID.c_str(), s.c_str())); // 存储离线用户的消息通知
+                    string s = myID + ":" + m2.Deserialization("massage");
+                    redisReply *reply2 = (redisReply *)redisCommand(Library, "LPUSH %s %s", friendID.c_str(), s.c_str()); // 存储离线用户的消息通知
                     freeReplyObject(reply2);
 
                 }
@@ -143,17 +145,19 @@ void Server::chathistory(int cfd, Massage m)
                 std::string massage(element->str, element->len);
                 std::string str = std::to_string(i);
                 j1[str] = massage;
+                cout<<massage<<endl;
             }
         }
         redisReply *reply2 = (redisReply *)redisCommand(Library, "LRANGE %s -0 -1", s2.c_str());
-        for (size_t i = 0; i < reply->elements; i++)
+        for (size_t i = 0; i < reply2->elements; i++)
         {
-            redisReply *element = reply->element[i];
+            redisReply *element = reply2->element[i];
             if (element->type == REDIS_REPLY_STRING)
             {
                 std::string massage(element->str, element->len);
                 std::string str = std::to_string(i);
                 j2[str] = massage;
+                cout<<massage<<endl;
             }
         }
         info[s1] = j1;
@@ -161,6 +165,8 @@ void Server::chathistory(int cfd, Massage m)
         Massage m1(Pchat_space, info, "0", "0");
         s = m1.Serialization();
         Err::sendMsg(cfd, s.c_str(), s.length());
+        freeReplyObject(reply);
+        freeReplyObject(reply2);
     }
     else
     {

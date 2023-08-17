@@ -228,7 +228,7 @@ void Server::friendrequests(int cfd, Massage m)
         try
         {
             int cfd2 = user_cfd.at(key);
-            j["friend"] = key;
+            j["friend"] = ID;
             Massage m3(result, j, "0", "0");
             
             Err::sendMsg(cfd2, m3.Serialization().c_str(), m3.Serialization().length()); // 如果在线，通知申请人申请已经通过

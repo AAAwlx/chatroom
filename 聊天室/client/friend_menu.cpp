@@ -18,7 +18,6 @@ void Clenit::friendadd(string ID)
     string a = masqueue.front();
     masqueue.pop();
     qmutex.unlock();
-    std::cout << a << endl;
     Massage m1(a);
     r = m1.Deserialization("return");
     if (r == "NULL")

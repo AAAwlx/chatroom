@@ -5,6 +5,6 @@ std::atomic<char *> BBuf;
 //启用一个redis库
 int main()
 {
-    Server server(SERVERPORT,"10.30.0.157");
+    Server server(SERVERPORT,"0.0.0.0");
     server.serun();
 }

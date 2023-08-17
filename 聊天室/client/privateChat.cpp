@@ -126,6 +126,7 @@ void Clenit::chathistory(string ID)
     string r = masqueue.front();
     masqueue.pop();
     qmutex.unlock();
+    cout<<r<<endl;
     if (r == "NOTfriend")
     {
         std::cout << "您与id为" << friendid << "还不是好友，请先添加他为好友" << endl;
@@ -137,15 +138,27 @@ void Clenit::chathistory(string ID)
         Value o = std::get<Json::Value>(result);
         Value j1 = o[ID + friendid];
         Value j2 = o[friendid + ID];
-        Json::Value::Members members1 = j1.getMemberNames();
-        for (const auto &key : members1)
+        if (!j1.empty())
         {
-            PrientfL(j1[key].asString());
+            PrientfL(ID+":");
+            Json::Value::Members members1 = j1.getMemberNames();
+            for (const auto &key : members1)
+            {
+                PrientfL(j1[key].asString());
+            }
+        }else{
+            cout<<"你还未向"<<friendid<<"发送消息"<<endl;
         }
-        Json::Value::Members members2 = j2.getMemberNames();
-        for (const auto &key : members2)
+        if (!j2.empty())
         {
-            PrientfR(j2[key].asString());
+            PrientfL(ID+":");
+            Json::Value::Members members2 = j2.getMemberNames();
+            for (const auto &key : members2)
+            {
+               PrientfR(j2[key].asString());
+            }
+        }else{
+            cout << friendid << "还未向你发送消息" <<endl;
         }
     }
 

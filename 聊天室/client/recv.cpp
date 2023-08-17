@@ -13,7 +13,7 @@ void thread_recv(const std::string &ID, int cfd, const std::string &chatobject)
             //cout << r << endl;
             std::variant<Json::Value, std::string> result = m.takeMassage("option");
             string o = std::get<std::string>(result);
-            Clenit::PrientfR(o);
+            //Clenit::PrientfR(o);
             if (o == "f_accapt")
             { // 好友请求通过
                 string friendid = m.Deserialization("friend");

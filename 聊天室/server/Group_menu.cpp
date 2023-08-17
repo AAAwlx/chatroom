@@ -20,6 +20,7 @@ void Server::add_group(int cfd)
     if (g.Inquire("ID") == "-1234567")
     { // 查询是否有此群存在
         cout << r << endl;
+        r = "NULL";
         Err::sendMsg(cfd, r.c_str(), r.length());
         return;
     }
@@ -217,7 +218,6 @@ void Server::manage_menu(int cfd)
         else if (g.member_List[ID].asInt() == 1)
         {
             r = "1";
-            //
         }
         else if (g.member_List[ID].asInt() == 2)
         {
@@ -255,7 +255,6 @@ void Server::manage_menu(int cfd)
         j["return"] = r;
         Massage m1("0", j, "0", "0");
         Err::sendMsg(cfd, m1.Serialization().c_str(), m1.Serialization().length());
-        Err::sendMsg(cfd, r.c_str(), r.length());
     }
 }
 void Server::publicChat(int cfd)
@@ -296,7 +295,6 @@ void Server::publicChat(int cfd)
                 }
                 redisReply *reply = static_cast<redisReply *>(redisCommand(Library, "LPUSH %s %s", groupid.c_str(), r)); // 长期存储历史聊天记录
                 freeReplyObject(reply);
-
                 for (const auto &key : members)
                 {
                     User member(key, Library);
@@ -388,7 +386,7 @@ void Server::history_group(int cfd)
 }
 void Server::group_menu(int cfd)
 {
-    cout << cfd << "已进入群界面" << endl;
+    
     string s;
     while (1)
     {

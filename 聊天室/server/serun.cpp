@@ -49,6 +49,16 @@ void Server::serun()
 {
     struct sockaddr_in serv_addr, clie_addr;
     Library = redisConnect("127.0.0.1", 6379);
+    if (Library == NULL || Library->err) {
+        if (Library) {
+            printf("连接错误: %s\n", Library->errstr);
+            // 在这里可以释放连接资源
+            redisFree(Library);
+        } else {
+            printf("无法分配内存\n");
+        }
+        return ;
+    }
     lfd = Err::Socket(AF_INET, SOCK_STREAM, 0);
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_port = htons(server_port);
