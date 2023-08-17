@@ -148,7 +148,7 @@ void Server::chathistory(int cfd, Massage m)
                 cout<<massage<<endl;
             }
         }
-        redisReply *reply2 = (redisReply *)redisCommand(Library, "LRANGE %s -0 -1", s2.c_str());
+        redisReply *reply2 = (redisReply *)redisCommand(Library, "LRANGE %s 0 -1", s2.c_str());
         for (size_t i = 0; i < reply2->elements; i++)
         {
             redisReply *element = reply2->element[i];

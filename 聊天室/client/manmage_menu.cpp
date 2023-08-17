@@ -44,15 +44,14 @@ void Clenit::man_addgroup(string ID, string man_groupid)
             string in;
             std::cout << "请你输入你要处理的成员(输入-1结束)" << endl;
             std::cin >> in;
-            if (!rlist.isMember(in));
-            {
-                std::cout << "该用户不在申请列表内，请重试" << endl;
-                continue;
-            }
-            
             if (in == "-1")
             {
                 break;
+            }
+            if(!rlist.isMember(in))
+            {
+                std::cout << "该用户不在申请列表内，请重试" << endl;
+                continue;
             }
             string str=to_string(i);
             info[str] = in;

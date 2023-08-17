@@ -69,7 +69,9 @@ void Server::man_addgroup(int cfd)
         Group g(groupid, Library);
         cout<<mid<<endl;
         k.add_group(groupid); 
-        g.add_member(mid);  
+        g.add_member(mid);
+        string g1= groupid+ "gr";
+        redisReply *reply = (redisReply *)redisCommand(Library, "LREM %s 0 %s", g1.c_str(), mid.c_str());
         try
         {
             int cfd2 = user_cfd.at(key);

@@ -195,11 +195,16 @@ void Clenit::friendrequests(string ID)
     Massage m1(r);
     std::variant<Json::Value, std::string> result = m1.takeMassage("content");
     Value rlist = std::get<Json::Value>(result);
+    if(rlist.empty()){
+        cout<<"无好友申请"<<endl;
+        return;
+    }
     Json::Value::Members members = rlist.getMemberNames();
     for (const auto &key : rlist.getMemberNames())
     {
         std::cout << "id为: " << key << "请求添加你为好友" << std::endl;
     }
+    
     Value info;
     while (1)
     {
