@@ -87,8 +87,10 @@ void Clenit::file_send(string ID)
         sent = sendfile(cfd, fp, &offset, filesize);
         if (sent == -1)
         {
-            perror("Error sending data");
-            break;
+            if(sent != EAGAIN ||sent != EWOULDBLOCK){
+                perror("Error sending data");
+                break;
+            }    
         }
         offset += sent;
         if (offset > filesize)
@@ -125,9 +127,19 @@ void Clenit::file_recv(string ID)
     Value j1;
     cout<< "请选择你要接收的文件" << endl;
     string name;
-    cin >> name;
+    while (1)
+    {
+        cin >> name;
+        if (!flist.isMember(name))
+        {
+            cout << "文件列表中没有你要接收的文件,请重新输入" << endl;
+        }else{
+            cout << "文件选择成功" << endl;
+            break;
+        }
+    }
     j1["filename"] = name;
-    Massage m2(RECV_FILE, j, "0", "0");
+    Massage m2(RECV_FILE, j1, "0", "0");
     Err::sendMsg(cfd, m2.Serialization().c_str(), m2.Serialization().length());
     std::unique_lock<std::mutex> lock2(qmutex);
     queueCondVar.wait(lock2, []
@@ -137,11 +149,7 @@ void Clenit::file_recv(string ID)
     qmutex.unlock();
     Massage m3(s1);
     string r = m3.Deserialization("return");
-    if (r == "NULL")
-    {
-        cout << "文件列表中没有你要接收的文件" << endl;
-        return;
-    }else if(r == "succeed")
+    if(r == "succeed")
     {
         cout << "请输入你要保存文件的路径" << endl;
         string filesize = m3.Deserialization("filesize");
@@ -206,8 +214,8 @@ void Clenit::file_menu(string ID)
         cout << "|     ChatRoom     |" << endl;
         cout << "+------------------+" << endl;
         cout << "|                  |" << endl;
-        cout << "|    rf:文件接收   |" << endl;
-        cout << "|    sf.文件发送   |" << endl;
+        cout << "|    1:文件发送    |" << endl;
+        cout << "|    2.文件接收    |" << endl;
         cout << "|    0:退出界面    |" << endl;
         cout << "|                  |" << endl;
         cout << "+------------------+" << endl;

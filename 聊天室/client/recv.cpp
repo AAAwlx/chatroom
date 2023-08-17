@@ -10,7 +10,7 @@ void thread_recv(const std::string &ID, int cfd, const std::string &chatobject)
         if (r.length() > 0)
         {
             Massage m(r);
-            cout << r << endl;
+            //cout << r << endl;
             std::variant<Json::Value, std::string> result = m.takeMassage("option");
             string o = std::get<std::string>(result);
             Clenit::PrientfR(o);

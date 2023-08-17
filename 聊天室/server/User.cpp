@@ -15,6 +15,7 @@ User::User(string id, redisContext *userm)
     string f = this->Inquire("FriendList");
     string g = this->Inquire("GroupList");
     Reader r;
+    cout<<"i"<<endl;
     r.parse(f, friend_List);
     r.parse(g, group_List);
 } // 老用户

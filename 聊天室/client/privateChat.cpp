@@ -75,7 +75,7 @@ void Clenit::pchatspace(string ID)
     else if (r == "Hidden")
     {
         std::cout << "您被id为" << friendid << "屏蔽了" << endl;
-        std::cin >> in;
+        return;
     }
     else if (r == "Succeed")
     {

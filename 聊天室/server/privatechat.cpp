@@ -9,11 +9,12 @@ void Server::directsend(int cfd, Massage m, string massage)
     cout << from_id << "+" << to_id << endl;
     cout << "----------------------------------------------------" << endl;
     User u(from_id, Library);
+    User u2(to_id,Library);
     Value j = u.friend_List;
     string r;
     if (j.isMember(to_id))
     {
-        if (j[to_id].asInt() == 1)
+        if (u2.friend_List[from_id].asInt() == 1)
         {
             string listname = from_id + to_id;
             redisReply *reply = static_cast<redisReply *>(redisCommand(Library, "LPUSH %s %s", listname.c_str(), massage.c_str())); // 长期存储历史聊天记录
@@ -59,12 +60,13 @@ void Server::pchatspace(int cfd, Massage m)
     string friendID = m.Deserialization("friendid");
     string myID = m.Deserialization("myID");
     User u(myID, Library);
+    User u2(friendID,Library);
     Value j = u.friend_List;
     string s;
     int cfd2;
     if (j.isMember(friendID)) // 是否是好友
     {
-        if (j[friendID].asInt() == 1) // 是否被屏蔽
+        if (u2.friend_List[myID].asInt() == 1) // 是否被屏蔽
         {
             s = "Succeed";
             Err::sendMsg(cfd, s.c_str(), s.length());

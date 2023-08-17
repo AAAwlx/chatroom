@@ -48,10 +48,11 @@ int user_ID;
 void Server::serun()
 {
     struct sockaddr_in serv_addr, clie_addr;
-    Library = redisConnect(server_ip.c_str(), 6379);
+    Library = redisConnect("127.0.0.1", 6379);
     lfd = Err::Socket(AF_INET, SOCK_STREAM, 0);
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_port = htons(server_port);
+    //cout<<server_ip<<endl;
     serv_addr.sin_addr.s_addr = inet_addr(server_ip.c_str());
     socklen_t clie_addr_len;
     clie_addr_len = sizeof(clie_addr);

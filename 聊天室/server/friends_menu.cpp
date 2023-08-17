@@ -213,6 +213,7 @@ void Server::friendrequests(int cfd, Massage m)
         std::string key = it.name(); // key为申请人id
         std::string value = (*it).asString();
         redisReply *reply = (redisReply *)redisCommand(Library, "LREM %s 0 %s", s.c_str(), key.c_str()); // 将已经处理过的好友请求删除
+        
         Value j;
         string result;
         if (value == "accapt")

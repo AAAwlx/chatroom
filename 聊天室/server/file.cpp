@@ -34,11 +34,9 @@ void Server::file_send(int cfd, Massage m)
     }
     string path = to_id + "/" + filename;
     cout<<r<<endl;
-    cout<<"1111"<<endl;
     freeReplyObject(reply3);
     if (a = '1') // 检查接收方是否存在
     {
-        cout<<"1111"<<endl;
         string f = to_id + "f";
         if (!u.friend_List.isMember(to_id))
         {
@@ -177,34 +175,25 @@ void Server::file_recv(int cfd, Massage m)
     Err::sendMsg(cfd, m1.Serialization().c_str(), m1.Serialization().length());//发送文件列表
     while(1){
         string a = Err::recvMsg(cfd);
-        while (a.c_str())
+        if(a.length()>0)
         {
             Massage m2(a);
             filename = m2.Deserialization("filename");
+            break;
         }
     }
     string filepath=id + "/" + filename;
-    redisReply *reply1 = (redisReply *)redisCommand(Library, "HGET %s %s","file",filepath.c_str());//长期文件储存列表
-    bool b1=(reply1->type == REDIS_REPLY_NIL);
-    freeReplyObject(reply1); 
+    cout<<"111111"<<endl;
     long filesize; 
-    Value j1;
-    if(b1){
-        j1["return"] = "NULL";
-        Massage m2(RECV_FILE,j,"0","0");
-        string mas=m2.Serialization();
-        Err::sendMsg(cfd,mas.c_str(),mas.length());
-        return;
-    }else{
-        redisReply *reply2 = (redisReply *)redisCommand(Library, "HGET %s %s","file",filename.c_str());//长期文件储存列表
-        filesize = stol(reply2->str);
-        j1["return"] = "succeed";
-        j1["filesize"] = reply2->str;
-        freeReplyObject(reply2); 
-        Massage m3(RECV_FILE,j,"0","0");
-        string mas1=m3.Serialization();
-        Err::sendMsg(cfd,mas1.c_str(),mas1.length());
-    } 
+    Value j1;   
+    redisReply *reply2 = (redisReply *)redisCommand(Library, "HGET %s %s","file",filepath.c_str());//长期文件储存列表
+    filesize = stol(reply2->str);
+    j1["return"] = "succeed";
+    j1["filesize"] = reply2->str;
+    freeReplyObject(reply2); 
+    Massage m3(RECV_FILE,j,"0","0");
+    string mas1=m3.Serialization();
+    Err::sendMsg(cfd,mas1.c_str(),mas1.length());
     Massage m2("recv_file",nullptr,"0","0");
     string msg=m2.Serialization();
     Err::sendMsg(cfd,msg.c_str(),msg.length());
@@ -218,8 +207,10 @@ void Server::file_recv(int cfd, Massage m)
         sent = sendfile(cfd, fd, &offset, filesize);
         if (sent == -1)
         {
-            
-            break;
+           if(sent != EAGAIN ||sent != EWOULDBLOCK){
+                perror("Error sending data");
+                break;
+            }    
         }
         offset += sent;
         if (offset > filesize)
@@ -247,7 +238,6 @@ void Server::file_menu(int cfd)
             cout << s << endl;
             if (s ==SEND_FILE)
             {
-                cout<<"----"<<endl;
                 Server::file_send(cfd, m);
             }
             else if (s == RECV_FILE)
