@@ -73,7 +73,7 @@ void Server::serun()
     int efd;
     efd = Err::Epoll_create(EP0LL_SIZE);
     struct epoll_event tep, ep[EP0LL_SIZE];
-    tep.events = EPOLLIN | EPOLLOUT; // 设置ET模式
+    tep.events = EPOLLIN | EPOLLOUT | EPOLLHUP; // 设置ET模式
     tep.data.fd = lfd;
     Err::Epoll_ctl(efd, EPOLL_CTL_ADD, lfd, &(tep));
     while (1)

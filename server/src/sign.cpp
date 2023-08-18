@@ -48,6 +48,7 @@ bool Server::sign_menu(int cfd)
     while (fd_in[cfd]==false)
     {
         string r;
+        
         r=Err::recvMsg(cfd);
         if (r.length() > 0)
         {
@@ -56,14 +57,14 @@ bool Server::sign_menu(int cfd)
             std::variant<Json::Value, std::string> result=m.takeMassage("option");
             std::string o = std::get<std::string>(result);
             cout << o << endl;
-            
+            cout<<cfd<<"已离开"<<endl;
+            cout << "sign循环" << endl;
             if(o==EXIT){
                 Err::Close(cfd);
-                cout<<cfd<<"已离开"<<endl;
                 return true;
             }else if(o==SIGN_UP)//注册
             {
-                cout << "sign循环" << endl;
+                
                 Server::sign_up(cfd,m);
             }else if(o==LOGIN)//登陆
             {

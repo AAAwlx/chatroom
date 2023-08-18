@@ -222,7 +222,7 @@ void Server::file_recv(int cfd, Massage m)
                 break;
             }
         }
-        offset += sent;
+        //offset += sent;
         cout<<"offset:"<< offset <<endl;
         cout << "filesize:" << filesize << endl;
         cout << "sent:" << sent << endl; 

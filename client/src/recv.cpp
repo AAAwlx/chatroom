@@ -162,6 +162,7 @@ void thread_recv(const std::string &ID, int cfd, const std::string &chatobject)
                 std::unique_lock<std::mutex> lock(qmutex);
                 queueCondVar.wait(lock, []
                       { return !masqueue.empty(); });
+                cout<<"aury4hruewhquruqweyruqeyrq73423iu54i234i234iuriu23432ui4y"<<endl;
                 string s1 = masqueue.front();
                 masqueue.pop();
                 qmutex.unlock();

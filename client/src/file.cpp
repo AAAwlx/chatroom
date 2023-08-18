@@ -94,8 +94,8 @@ void Clenit::file_send(string ID)
                 break;
             }
         }
-        offset += sent;
-        if (offset > filesize)
+        //offset += sent;
+        if (offset >= filesize)
         {
             break;
         }
@@ -192,8 +192,10 @@ void Clenit::file_recv(string ID)
                 {
                     sum2 += ret2;
                 }
-
-                cout << sum2 << endl;
+                cout << "filetotal:" << filesize << endl;
+                cout << "recivebyte" << ret << endl;
+                cout << "Curtotal:" << sum << endl;
+                cout << "Curwrite:" << sum2 << endl;
                 if (sum2 >= stol(filesize))
                 {
                     cout << "BREAK" << endl;
@@ -202,6 +204,7 @@ void Clenit::file_recv(string ID)
                 bzero(recvbuf, sizeof(recvbuf));
             }
         }
+        cout << "OK" << endl;
         masqueue.push("Received");
         qmutex.unlock();
         queueCondVar.notify_one();
