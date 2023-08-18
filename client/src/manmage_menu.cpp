@@ -7,9 +7,9 @@ void Clenit::man_addgroup(string ID, string man_groupid)
     j["groupid"] = man_groupid;
     Massage m(MAN_ADDGROUP, j, "0", "0");
     string s = m.Serialization();
-    if (!g_flag||!m_flag)
+    if (!g_flag || !m_flag)
     {
-        cout<<"退出"<<endl;
+        // cout<<"退出"<<endl;
         Clenit::Exit();
         return;
     }
@@ -38,7 +38,7 @@ void Clenit::man_addgroup(string ID, string man_groupid)
             std::cout << "id为: " << key << "请求添加入群聊" << std::endl;
         }
         Value info;
-        int i=0;
+        int i = 0;
         while (1)
         {
             string in;
@@ -48,18 +48,18 @@ void Clenit::man_addgroup(string ID, string man_groupid)
             {
                 break;
             }
-            if(!rlist.isMember(in))
+            if (!rlist.isMember(in))
             {
                 std::cout << "该用户不在申请列表内，请重试" << endl;
                 continue;
             }
-            string str=to_string(i);
+            string str = to_string(i);
             info[str] = in;
             i++;
         }
         Massage m2(MAN_ADDGROUP, info, "0", "0");
         string s1 = m2.Serialization();
-        if (!g_flag||!m_flag)
+        if (!g_flag || !m_flag)
         {
             std::cout << "群聊：" << man_groupid << "已被解散" << endl;
             return;
@@ -74,9 +74,9 @@ void Clenit::man_view(string ID, string man_groupid)
     j["groupid"] = man_groupid;
     Massage m(MAN_VIEW, j, "0", "0");
     string s = m.Serialization();
-    if (!g_flag||!m_flag)
+    if (!g_flag || !m_flag)
     {
-        cout<<"退出"<<endl;
+        // cout<<"退出"<<endl;
         Clenit::Exit();
         return;
     }
@@ -125,6 +125,7 @@ void Clenit::man_addmanager(string ID, string man_groupid)
     if (in == ID)
     {
         cout << "不能将自己设为管理员" << endl;
+        Clenit::Exit();
         return;
     }
     Massage m(MAN_ADDMANAGER, j, "0", "0");
@@ -164,6 +165,7 @@ void Clenit::man_delmanager(string ID, string man_groupid)
     if (in == ID)
     {
         cout << "不能将自己移除" << endl;
+        Clenit::Exit();
         return;
     }
     Massage m(MAN_QUITMANAGER, j, "0", "0");
@@ -198,13 +200,14 @@ void Clenit::man_delmember(string ID, string man_groupid)
     if (in == ID)
     {
         cout << "不能将自己移除" << endl;
+        Clenit::Exit();
         return;
     }
     Massage m(MAN_QUITMEMBER, j, "0", "0");
     string s = m.Serialization();
-    if (!g_flag||!m_flag)
+    if (!g_flag || !m_flag)
     {
-        cout<<"退出"<<endl;
+        cout << "退出" << endl;
         Clenit::Exit();
         return;
     }
@@ -238,7 +241,7 @@ void Clenit::ignoregroup(string ID, string man_groupid)
 
     Massage m(IGN_GROUP, j, "0", "0");
     string s = m.Serialization();
-    if (!g_flag||!m_flag)
+    if (!g_flag || !m_flag)
     {
         Clenit::Exit();
         return;
@@ -268,8 +271,9 @@ void Clenit::grouprecover(string ID, string man_groupid)
     j["ID"] = ID;
     Massage m(REC_FRIEND, j, "0", "0");
     string s = m.Serialization();
-    if (!g_flag||!m_flag)
+    if (!g_flag || !m_flag)
     {
+        Clenit::Exit();
         return;
     }
     Err::sendMsg(cfd, s.c_str(), s.length());
@@ -299,6 +303,7 @@ bool Clenit::transfer_group(string ID, string man_groupid)
     if (in == ID)
     {
         cout << "不能转让给自己" << endl;
+        Clenit::Exit();
         return false;
     }
     j["groupid"] = man_groupid;
@@ -324,7 +329,9 @@ bool Clenit::transfer_group(string ID, string man_groupid)
     {
         std::cout << "id为" << in << "还不是群成员" << endl;
         return false;
-    }else{
+    }
+    else
+    {
         return false;
     }
 }
@@ -363,12 +370,13 @@ void Clenit::man_addmember(string ID, string man_groupid)
     if (in == ID)
     {
         cout << "不能将自己添加入群" << endl;
+        Clenit::Exit();
         return;
     }
     Massage m(MAN_QUITMEMBER, j, "0", "0");
     string s = m.Serialization();
     Err::sendMsg(cfd, s.c_str(), s.length());
-    if (!g_flag||!m_flag)
+    if (!g_flag || !m_flag)
     {
         Clenit::Exit();
         return;
@@ -400,7 +408,7 @@ void Clenit::manage_menu2(string ID, string man_groupid)
     m_flag = true;
     while (true)
     {
-        
+
         cout << "+------------------+" << endl;
         cout << "|     ChatRoom     |" << endl;
         cout << "+------------------+" << endl;
@@ -488,7 +496,7 @@ void Clenit::manage_menu0(string ID, string man_groupid)
     {
         if (!g_flag)
         {
-            Err::sendMsg(cfd, "0",sizeof("0"));
+            Err::sendMsg(cfd, "0", sizeof("0"));
             break;
         }
         cout << "+------------------+" << endl;
@@ -534,9 +542,9 @@ void Clenit::manage_menu1(string ID, string man_groupid)
     m_flag = true;
     while (true)
     {
-        if (!g_flag||!m_flag)
+        if (!g_flag || !m_flag)
         {
-            Err::sendMsg(cfd, "0",sizeof("0"));
+            Err::sendMsg(cfd, "0", sizeof("0"));
             break;
         }
         cout << "+------------------+" << endl;

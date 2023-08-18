@@ -203,8 +203,9 @@ void Clenit::publicChat(string ID)
         cout << "你已进入" << in << "可以开始聊天了(输入Q退出)" << endl;
         chatobject = in;
         while (1)
-        {   string chat;
-            cin >> chat;
+        {
+            string chat;
+            std::getline(std::cin, chat);
             if (!g_flag)
             {
                 chat="Q";

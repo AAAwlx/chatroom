@@ -180,8 +180,7 @@ void Clenit::file_recv(string ID)
         char recvbuf[BUFSIZ];
         Err::sendMsg(cfd,"0",sizeof("0"));
         while (true)
-        {
-            
+        { 
             if ((ret = read(cfd, recvbuf, sizeof(recvbuf))) > 0)
             {
                 if (ret > 0)

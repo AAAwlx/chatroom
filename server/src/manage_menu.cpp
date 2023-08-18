@@ -122,6 +122,12 @@ void Server::man_addmanager(int cfd)
         }
     }
     Massage m(s);
+    std::variant<Json::Value, std::string> result = m.takeMassage("option");
+    std::string o = std::get<std::string>(result);
+    if(o==EXIT){
+        cout<<"退出"<<endl;
+        return;
+    }
     string groupid = m.Deserialization("groupid");
     string add_id = m.Deserialization("add_id");
     Group g(groupid, Library);
@@ -166,6 +172,12 @@ void Server::man_delmanager(int cfd)
         }
     }
     Massage m(s);
+    std::variant<Json::Value, std::string> result = m.takeMassage("option");
+    std::string o = std::get<std::string>(result);
+    if(o==EXIT){
+        cout<<"退出"<<endl;
+        return;
+    }
     string groupid = m.Deserialization("groupid");
     string del_id = m.Deserialization("del_id");
     Group g(groupid, Library);
@@ -369,6 +381,12 @@ bool Server::transfer_group(int cfd)
         }
     }
     Massage m(s);
+    std::variant<Json::Value, std::string> result = m.takeMassage("option");
+    std::string o = std::get<std::string>(result);
+    if(o==EXIT){
+        cout<<"退出"<<endl;
+        return false;
+    }
     string groupid = m.Deserialization("groupid");
     string ID = m.Deserialization("ID");
     string tra_id = m.Deserialization("tra_id");

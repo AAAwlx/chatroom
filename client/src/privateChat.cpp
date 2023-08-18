@@ -20,7 +20,7 @@ void Clenit::directsend(string ID)
     }
     std::cout << "请输入你要说的话" << endl;
     std::cin >> massage;
-    info["massage"] = massage;
+    std::getline(std::cin, massage );
     Massage m("Direct_send", info, id, ID);
     string s = m.Serialization();
     Err::sendMsg(cfd, s.c_str(), s.length());
@@ -89,7 +89,7 @@ void Clenit::pchatspace(string ID)
                 std::cout << "您的好友：" << friendid << "已将你删除" << endl;
                 break;
             }
-            std::cin >> in2;
+            std::getline(std::cin,in2);
             if (in2 == "Q")
             {
                 chatobject = friendid;

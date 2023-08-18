@@ -223,7 +223,10 @@ void Server::file_recv(int cfd, Massage m)
             }
         }
         offset += sent;
-        if (offset > filesize)
+        cout<<"offset:"<< offset <<endl;
+        cout << "filesize:" << filesize << endl;
+        cout << "sent:" << sent << endl; 
+        if (offset >= filesize)
         {
             cout << "BREAK" << endl;
             break;
