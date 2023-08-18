@@ -1,0 +1,3 @@
+/home/wlx/chatroom-wlx/client/build/CMakeFiles/client.dir
+/home/wlx/chatroom-wlx/client/build/CMakeFiles/edit_cache.dir
+/home/wlx/chatroom-wlx/client/build/CMakeFiles/rebuild_cache.dir
