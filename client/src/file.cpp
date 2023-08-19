@@ -141,10 +141,15 @@ void Clenit::file_recv(string ID)
         cout<<"你还未加入该群"<<endl;
         return;
     }
+    string s1212;
     for (const auto &key : flist.getMemberNames())
     {
+        
         std::cout << "文件：" << key << "大小：" << flist[key].asString() << std::endl;
+        s1212=key;
     }
+    cout<<s1212<<endl;
+    cout<<flist.isMember(s1212)<<endl;
     Value j1;
     cout << "请选择你要接收的文件" << endl;
     string name;
@@ -153,7 +158,8 @@ void Clenit::file_recv(string ID)
         cin >> name;
         if (!flist.isMember(name))
         {
-            cout << "文件列表中没有你要接收的文件,请重新输入" << endl;
+
+            cout << "文件列表中没有你要接收的文件,请重新输入" << flist.isMember(name) << endl;
         }
         else
         {
@@ -173,6 +179,7 @@ void Clenit::file_recv(string ID)
     qmutex.unlock();
     Massage m3(s1);
     string r = m3.Deserialization("return");
+    //cout<<r<endl;
     if (r == "succeed")
     {
         cout << "请输入你要保存文件的路径" << endl;
@@ -195,19 +202,31 @@ void Clenit::file_recv(string ID)
                 break;
             }
         }
+        Err::sendMsg(cfd, "0qq", sizeof("0qq"));
         long ret, ret2;
         long sum = 0;
         long sum2 = 0;
         qmutex.lock();
         char recvbuf[BUFSIZ * 8];
-        Err::sendMsg(cfd, "0", sizeof("0"));
+        long readsize;
         while (true)
         {
-            if ((ret = read(cfd, recvbuf, sizeof(recvbuf))) > 0)
+            if(stol(filesize) - sum2 < BUFSIZ * 8) {
+                readsize = stol(filesize) - sum2;
+            }else{
+                readsize = BUFSIZ * 8;
+            }   
+            if ((ret = read(cfd, recvbuf, readsize)) > 0)
             {
+                
                 if (ret > 0)
                 {
                     sum += ret;
+                }else if(ret == -1){
+                    if (errno == EAGAIN || errno == EWOULDBLOCK)
+                    {
+                        continue;
+                    }
                 }
                 ret2 = write(fd, recvbuf, ret);
                 if (ret2 > 0)
@@ -216,14 +235,19 @@ void Clenit::file_recv(string ID)
                 }
                 cout << "filetotal:" << filesize << endl;
                 cout << "recivebyte" << ret << endl;
-                cout << "Curtotal:" << sum << endl;
-                cout << "Curwrite:" << sum2 << endl;
+                cout << "Curwrite:" << ret2 << endl;
+                cout<<"Curtotal:" << sum2 << endl;
+                if (ret > ret2)
+                {
+                    cout << "重设偏移" << endl;
+                    lseek(fd, sum2, SEEK_SET);
+                }
                 if (sum2 >= stol(filesize))
                 {
                     cout << "BREAK" << endl;
                     break;
                 }
-                bzero(recvbuf, sizeof(recvbuf));
+                bzero(recvbuf, BUFSIZ * 8);
             }
         }
         cout << "OK" << endl;

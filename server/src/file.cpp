@@ -13,13 +13,17 @@ void Server::file_send1(int cfd, Massage m)
     {
         redisReply *reply1 = (redisReply *)redisCommand(Library, "HGET %s %s", f.c_str(), filename.c_str()); // 未处理文件键为发送者id，处理后的文件键为0            cout<<"存入用户文件列表"<<endl;
         freeReplyObject(reply1);
-        if (!(reply1->type == REDIS_REPLY_NIL))
+        if ((reply1->type == REDIS_REPLY_NIL))
         {
+            cout<<filename.length()<<endl;
+
             size_t lastDotPos = filename.rfind('.');
 
             filename.insert(lastDotPos, "1");
 
             filename += 1;
+            
+            cout<<filename.length()<<endl;
         }
         try
         {
@@ -61,19 +65,19 @@ void Server::file_send1(int cfd, Massage m)
     while (true)
     {
         bzero(sendbuf, BUFSIZ * 8);
-        if ((ret = read(cfd, sendbuf, BUFSIZ)) > 0)
+        if ((ret = Err::readn(cfd, sendbuf, BUFSIZ)) > 0)
         {
-            retw = write(fd, sendbuf, ret);
+            retw = Err::writen(fd, sendbuf, ret);
             if (retw > 0)
             {
                 sum += retw;
             }
             cout << sum << endl;
-            if (ret > retw)
+            /*if (ret > retw)
             {
                 cout << "重设偏移" << endl;
                 lseek(fd, sum, SEEK_SET);
-            }
+            }*/
             if (sum >= stol(filesize))
             {
                 cout << "BREAK" << endl;
@@ -156,9 +160,9 @@ void Server::file_send2(int cfd, Massage m)
     while (true)
     {
         bzero(sendbuf, BUFSIZ * 8);
-        if ((ret = read(cfd, sendbuf, BUFSIZ)) > 0)
+        if ((ret = Err::readn(cfd, sendbuf, BUFSIZ)) > 0)
         {
-            retw = write(fd, sendbuf, ret);
+            retw = Err::writen(fd, sendbuf, ret);
             if (retw > 0)
             {
                 sum += retw;
@@ -249,7 +253,6 @@ void Server::file_recv(int cfd, Massage m)
     {
         return;
     }
-    
     while (1)
     {
         string a = Err::recvMsg(cfd);
@@ -262,8 +265,7 @@ void Server::file_recv(int cfd, Massage m)
         }
     }
     filepath+=filename;
-    
-    // cout << "111111" << endl;
+    cout << "111111" << endl;
     long filesizel = stol(filesize);
     Value j1;
     j1["return"] = "succeed";
@@ -272,19 +274,19 @@ void Server::file_recv(int cfd, Massage m)
     string mas1 = m3.Serialization();
     Err::sendMsg(cfd, mas1.c_str(), mas1.length());
     cout << j1["return"].asString() << endl;
+    while (1)
+    {
+        string a = Err::recvMsg(cfd);
+        if (a.length() > 0){
+            break;
+        }
+    }
     Massage m2("recv_file", j1, "0", "0");
     string msg = m2.Serialization();
     Err::sendMsg(cfd, msg.c_str(), msg.length());
     int fd = open(filepath.c_str(), O_RDONLY);
     off_t offset = 0;
-    while (1)
-    {
-        string a = Err::recvMsg(cfd);
-        if (a.length() > 0)
-        {
-            break;
-        }
-    }
+    
     cout << "文件传输开始，请耐心等待" << endl;
     ssize_t sent;
     user_cfd.erase(id);
