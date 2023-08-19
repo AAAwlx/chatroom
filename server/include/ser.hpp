@@ -53,6 +53,7 @@
 using namespace std;
 extern redisContext* Library;//启用一个redis库
 extern std::unordered_map<std::string, int> user_cfd;
+//extern std::unordered_map<int ,std::thread::id> cfd_pid;
 extern int user_ID;
 extern std::atomic<int> cfd;
 class Server
@@ -75,7 +76,7 @@ public:
     Server(int port, string ip);
     ~Server();
     void serun();
-    static void thread_work(int cfd);
+    static void thread_work(int clie_fd);
     //登陆界面
     static bool sign_menu(int cfd);//账号主界面
     static void sign_up(int cfd,Massage m);//注册
@@ -125,7 +126,8 @@ public:
     static void man_addmember(int cfd);//添加成员
     //文件
     static void file_menu(int cfd);
-    static void file_send(int cfd,Massage m);
+    static void file_send1(int cfd,Massage m);
+    static void file_send2(int cfd,Massage m);
     static void file_recv(int cfd,Massage m);
     
 };

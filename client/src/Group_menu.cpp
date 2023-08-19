@@ -120,7 +120,7 @@ void Clenit::view_group(string ID)
             }
             else
             {
-                s = "id: " + key + " 未屏蔽";
+                s = "id: " + key + " 已屏蔽";
             }
             std::cout << s << std::endl;
         }
@@ -262,6 +262,8 @@ void Clenit::history_group(string ID)
     else if (o == "NULL")
     {
         std::cout << "你还未进入" << in << "请输入正确id" << endl;
+    }else if(o == "H"){
+        std::cout << "你已经将群屏蔽" << endl;
     }
 }
 void Clenit::group_menu(string ID)

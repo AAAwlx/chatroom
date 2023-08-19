@@ -393,9 +393,6 @@ CMakeFiles/client.dir/src/Err.cpp.o: ../src/Err.cpp \
   /usr/include/x86_64-linux-gnu/sys/time.h \
   /usr/local/include/hiredis/sds.h \
   /usr/local/include/hiredis/alloc.h \
-  ../include/clit.hpp \
-  /usr/include/c++/11/queue \
-  /usr/include/c++/11/bits/stl_queue.h \
   /usr/include/termios.h \
   /usr/include/x86_64-linux-gnu/bits/termios.h \
   /usr/include/x86_64-linux-gnu/bits/termios-struct.h \
@@ -407,7 +404,10 @@ CMakeFiles/client.dir/src/Err.cpp.o: ../src/Err.cpp \
   /usr/include/x86_64-linux-gnu/bits/termios-c_lflag.h \
   /usr/include/x86_64-linux-gnu/bits/termios-tcflow.h \
   /usr/include/x86_64-linux-gnu/bits/termios-misc.h \
-  /usr/include/x86_64-linux-gnu/sys/ttydefaults.h
+  /usr/include/x86_64-linux-gnu/sys/ttydefaults.h \
+  ../include/clit.hpp \
+  /usr/include/c++/11/queue \
+  /usr/include/c++/11/bits/stl_queue.h
 
 CMakeFiles/client.dir/src/Group_menu.cpp.o: ../src/Group_menu.cpp \
   /usr/include/stdc-predef.h \
@@ -801,9 +801,6 @@ CMakeFiles/client.dir/src/Group_menu.cpp.o: ../src/Group_menu.cpp \
   /usr/include/x86_64-linux-gnu/sys/time.h \
   /usr/local/include/hiredis/sds.h \
   /usr/local/include/hiredis/alloc.h \
-  ../include/clit.hpp \
-  /usr/include/c++/11/queue \
-  /usr/include/c++/11/bits/stl_queue.h \
   /usr/include/termios.h \
   /usr/include/x86_64-linux-gnu/bits/termios.h \
   /usr/include/x86_64-linux-gnu/bits/termios-struct.h \
@@ -815,7 +812,10 @@ CMakeFiles/client.dir/src/Group_menu.cpp.o: ../src/Group_menu.cpp \
   /usr/include/x86_64-linux-gnu/bits/termios-c_lflag.h \
   /usr/include/x86_64-linux-gnu/bits/termios-tcflow.h \
   /usr/include/x86_64-linux-gnu/bits/termios-misc.h \
-  /usr/include/x86_64-linux-gnu/sys/ttydefaults.h
+  /usr/include/x86_64-linux-gnu/sys/ttydefaults.h \
+  ../include/clit.hpp \
+  /usr/include/c++/11/queue \
+  /usr/include/c++/11/bits/stl_queue.h
 
 CMakeFiles/client.dir/src/Massage.cpp.o: ../src/Massage.cpp \
   /usr/include/stdc-predef.h \
@@ -1209,9 +1209,6 @@ CMakeFiles/client.dir/src/Massage.cpp.o: ../src/Massage.cpp \
   /usr/include/x86_64-linux-gnu/sys/time.h \
   /usr/local/include/hiredis/sds.h \
   /usr/local/include/hiredis/alloc.h \
-  ../include/clit.hpp \
-  /usr/include/c++/11/queue \
-  /usr/include/c++/11/bits/stl_queue.h \
   /usr/include/termios.h \
   /usr/include/x86_64-linux-gnu/bits/termios.h \
   /usr/include/x86_64-linux-gnu/bits/termios-struct.h \
@@ -1223,7 +1220,10 @@ CMakeFiles/client.dir/src/Massage.cpp.o: ../src/Massage.cpp \
   /usr/include/x86_64-linux-gnu/bits/termios-c_lflag.h \
   /usr/include/x86_64-linux-gnu/bits/termios-tcflow.h \
   /usr/include/x86_64-linux-gnu/bits/termios-misc.h \
-  /usr/include/x86_64-linux-gnu/sys/ttydefaults.h
+  /usr/include/x86_64-linux-gnu/sys/ttydefaults.h \
+  ../include/clit.hpp \
+  /usr/include/c++/11/queue \
+  /usr/include/c++/11/bits/stl_queue.h
 
 CMakeFiles/client.dir/src/Printf.cpp.o: ../src/Printf.cpp \
   /usr/include/stdc-predef.h \
@@ -1617,9 +1617,6 @@ CMakeFiles/client.dir/src/Printf.cpp.o: ../src/Printf.cpp \
   /usr/include/x86_64-linux-gnu/sys/time.h \
   /usr/local/include/hiredis/sds.h \
   /usr/local/include/hiredis/alloc.h \
-  ../include/clit.hpp \
-  /usr/include/c++/11/queue \
-  /usr/include/c++/11/bits/stl_queue.h \
   /usr/include/termios.h \
   /usr/include/x86_64-linux-gnu/bits/termios.h \
   /usr/include/x86_64-linux-gnu/bits/termios-struct.h \
@@ -1631,7 +1628,10 @@ CMakeFiles/client.dir/src/Printf.cpp.o: ../src/Printf.cpp \
   /usr/include/x86_64-linux-gnu/bits/termios-c_lflag.h \
   /usr/include/x86_64-linux-gnu/bits/termios-tcflow.h \
   /usr/include/x86_64-linux-gnu/bits/termios-misc.h \
-  /usr/include/x86_64-linux-gnu/sys/ttydefaults.h
+  /usr/include/x86_64-linux-gnu/sys/ttydefaults.h \
+  ../include/clit.hpp \
+  /usr/include/c++/11/queue \
+  /usr/include/c++/11/bits/stl_queue.h
 
 CMakeFiles/client.dir/src/clirun.cpp.o: ../src/clirun.cpp \
   /usr/include/stdc-predef.h \
@@ -2025,9 +2025,6 @@ CMakeFiles/client.dir/src/clirun.cpp.o: ../src/clirun.cpp \
   /usr/include/x86_64-linux-gnu/sys/time.h \
   /usr/local/include/hiredis/sds.h \
   /usr/local/include/hiredis/alloc.h \
-  ../include/clit.hpp \
-  /usr/include/c++/11/queue \
-  /usr/include/c++/11/bits/stl_queue.h \
   /usr/include/termios.h \
   /usr/include/x86_64-linux-gnu/bits/termios.h \
   /usr/include/x86_64-linux-gnu/bits/termios-struct.h \
@@ -2039,7 +2036,10 @@ CMakeFiles/client.dir/src/clirun.cpp.o: ../src/clirun.cpp \
   /usr/include/x86_64-linux-gnu/bits/termios-c_lflag.h \
   /usr/include/x86_64-linux-gnu/bits/termios-tcflow.h \
   /usr/include/x86_64-linux-gnu/bits/termios-misc.h \
-  /usr/include/x86_64-linux-gnu/sys/ttydefaults.h
+  /usr/include/x86_64-linux-gnu/sys/ttydefaults.h \
+  ../include/clit.hpp \
+  /usr/include/c++/11/queue \
+  /usr/include/c++/11/bits/stl_queue.h
 
 CMakeFiles/client.dir/src/clitmain.cpp.o: ../src/clitmain.cpp \
   /usr/include/stdc-predef.h \
@@ -2841,9 +2841,6 @@ CMakeFiles/client.dir/src/file.cpp.o: ../src/file.cpp \
   /usr/include/x86_64-linux-gnu/sys/time.h \
   /usr/local/include/hiredis/sds.h \
   /usr/local/include/hiredis/alloc.h \
-  ../include/clit.hpp \
-  /usr/include/c++/11/queue \
-  /usr/include/c++/11/bits/stl_queue.h \
   /usr/include/termios.h \
   /usr/include/x86_64-linux-gnu/bits/termios.h \
   /usr/include/x86_64-linux-gnu/bits/termios-struct.h \
@@ -2855,7 +2852,10 @@ CMakeFiles/client.dir/src/file.cpp.o: ../src/file.cpp \
   /usr/include/x86_64-linux-gnu/bits/termios-c_lflag.h \
   /usr/include/x86_64-linux-gnu/bits/termios-tcflow.h \
   /usr/include/x86_64-linux-gnu/bits/termios-misc.h \
-  /usr/include/x86_64-linux-gnu/sys/ttydefaults.h
+  /usr/include/x86_64-linux-gnu/sys/ttydefaults.h \
+  ../include/clit.hpp \
+  /usr/include/c++/11/queue \
+  /usr/include/c++/11/bits/stl_queue.h
 
 CMakeFiles/client.dir/src/friend_menu.cpp.o: ../src/friend_menu.cpp \
   /usr/include/stdc-predef.h \
@@ -3249,9 +3249,6 @@ CMakeFiles/client.dir/src/friend_menu.cpp.o: ../src/friend_menu.cpp \
   /usr/include/x86_64-linux-gnu/sys/time.h \
   /usr/local/include/hiredis/sds.h \
   /usr/local/include/hiredis/alloc.h \
-  ../include/clit.hpp \
-  /usr/include/c++/11/queue \
-  /usr/include/c++/11/bits/stl_queue.h \
   /usr/include/termios.h \
   /usr/include/x86_64-linux-gnu/bits/termios.h \
   /usr/include/x86_64-linux-gnu/bits/termios-struct.h \
@@ -3263,7 +3260,10 @@ CMakeFiles/client.dir/src/friend_menu.cpp.o: ../src/friend_menu.cpp \
   /usr/include/x86_64-linux-gnu/bits/termios-c_lflag.h \
   /usr/include/x86_64-linux-gnu/bits/termios-tcflow.h \
   /usr/include/x86_64-linux-gnu/bits/termios-misc.h \
-  /usr/include/x86_64-linux-gnu/sys/ttydefaults.h
+  /usr/include/x86_64-linux-gnu/sys/ttydefaults.h \
+  ../include/clit.hpp \
+  /usr/include/c++/11/queue \
+  /usr/include/c++/11/bits/stl_queue.h
 
 CMakeFiles/client.dir/src/mainmnue.cpp.o: ../src/mainmnue.cpp \
   /usr/include/stdc-predef.h \
@@ -3657,9 +3657,6 @@ CMakeFiles/client.dir/src/mainmnue.cpp.o: ../src/mainmnue.cpp \
   /usr/include/x86_64-linux-gnu/sys/time.h \
   /usr/local/include/hiredis/sds.h \
   /usr/local/include/hiredis/alloc.h \
-  ../include/clit.hpp \
-  /usr/include/c++/11/queue \
-  /usr/include/c++/11/bits/stl_queue.h \
   /usr/include/termios.h \
   /usr/include/x86_64-linux-gnu/bits/termios.h \
   /usr/include/x86_64-linux-gnu/bits/termios-struct.h \
@@ -3671,7 +3668,10 @@ CMakeFiles/client.dir/src/mainmnue.cpp.o: ../src/mainmnue.cpp \
   /usr/include/x86_64-linux-gnu/bits/termios-c_lflag.h \
   /usr/include/x86_64-linux-gnu/bits/termios-tcflow.h \
   /usr/include/x86_64-linux-gnu/bits/termios-misc.h \
-  /usr/include/x86_64-linux-gnu/sys/ttydefaults.h
+  /usr/include/x86_64-linux-gnu/sys/ttydefaults.h \
+  ../include/clit.hpp \
+  /usr/include/c++/11/queue \
+  /usr/include/c++/11/bits/stl_queue.h
 
 CMakeFiles/client.dir/src/manmage_menu.cpp.o: ../src/manmage_menu.cpp \
   /usr/include/stdc-predef.h \
@@ -4065,9 +4065,6 @@ CMakeFiles/client.dir/src/manmage_menu.cpp.o: ../src/manmage_menu.cpp \
   /usr/include/x86_64-linux-gnu/sys/time.h \
   /usr/local/include/hiredis/sds.h \
   /usr/local/include/hiredis/alloc.h \
-  ../include/clit.hpp \
-  /usr/include/c++/11/queue \
-  /usr/include/c++/11/bits/stl_queue.h \
   /usr/include/termios.h \
   /usr/include/x86_64-linux-gnu/bits/termios.h \
   /usr/include/x86_64-linux-gnu/bits/termios-struct.h \
@@ -4079,7 +4076,10 @@ CMakeFiles/client.dir/src/manmage_menu.cpp.o: ../src/manmage_menu.cpp \
   /usr/include/x86_64-linux-gnu/bits/termios-c_lflag.h \
   /usr/include/x86_64-linux-gnu/bits/termios-tcflow.h \
   /usr/include/x86_64-linux-gnu/bits/termios-misc.h \
-  /usr/include/x86_64-linux-gnu/sys/ttydefaults.h
+  /usr/include/x86_64-linux-gnu/sys/ttydefaults.h \
+  ../include/clit.hpp \
+  /usr/include/c++/11/queue \
+  /usr/include/c++/11/bits/stl_queue.h
 
 CMakeFiles/client.dir/src/privateChat.cpp.o: ../src/privateChat.cpp \
   /usr/include/stdc-predef.h \
@@ -4473,9 +4473,6 @@ CMakeFiles/client.dir/src/privateChat.cpp.o: ../src/privateChat.cpp \
   /usr/include/x86_64-linux-gnu/sys/time.h \
   /usr/local/include/hiredis/sds.h \
   /usr/local/include/hiredis/alloc.h \
-  ../include/clit.hpp \
-  /usr/include/c++/11/queue \
-  /usr/include/c++/11/bits/stl_queue.h \
   /usr/include/termios.h \
   /usr/include/x86_64-linux-gnu/bits/termios.h \
   /usr/include/x86_64-linux-gnu/bits/termios-struct.h \
@@ -4487,7 +4484,10 @@ CMakeFiles/client.dir/src/privateChat.cpp.o: ../src/privateChat.cpp \
   /usr/include/x86_64-linux-gnu/bits/termios-c_lflag.h \
   /usr/include/x86_64-linux-gnu/bits/termios-tcflow.h \
   /usr/include/x86_64-linux-gnu/bits/termios-misc.h \
-  /usr/include/x86_64-linux-gnu/sys/ttydefaults.h
+  /usr/include/x86_64-linux-gnu/sys/ttydefaults.h \
+  ../include/clit.hpp \
+  /usr/include/c++/11/queue \
+  /usr/include/c++/11/bits/stl_queue.h
 
 CMakeFiles/client.dir/src/recv.cpp.o: ../src/recv.cpp \
   /usr/include/stdc-predef.h \
@@ -4881,9 +4881,6 @@ CMakeFiles/client.dir/src/recv.cpp.o: ../src/recv.cpp \
   /usr/include/x86_64-linux-gnu/sys/time.h \
   /usr/local/include/hiredis/sds.h \
   /usr/local/include/hiredis/alloc.h \
-  ../include/clit.hpp \
-  /usr/include/c++/11/queue \
-  /usr/include/c++/11/bits/stl_queue.h \
   /usr/include/termios.h \
   /usr/include/x86_64-linux-gnu/bits/termios.h \
   /usr/include/x86_64-linux-gnu/bits/termios-struct.h \
@@ -4895,7 +4892,10 @@ CMakeFiles/client.dir/src/recv.cpp.o: ../src/recv.cpp \
   /usr/include/x86_64-linux-gnu/bits/termios-c_lflag.h \
   /usr/include/x86_64-linux-gnu/bits/termios-tcflow.h \
   /usr/include/x86_64-linux-gnu/bits/termios-misc.h \
-  /usr/include/x86_64-linux-gnu/sys/ttydefaults.h
+  /usr/include/x86_64-linux-gnu/sys/ttydefaults.h \
+  ../include/clit.hpp \
+  /usr/include/c++/11/queue \
+  /usr/include/c++/11/bits/stl_queue.h
 
 CMakeFiles/client.dir/src/sign.cpp.o: ../src/sign.cpp \
   /usr/include/stdc-predef.h \
@@ -5289,9 +5289,6 @@ CMakeFiles/client.dir/src/sign.cpp.o: ../src/sign.cpp \
   /usr/include/x86_64-linux-gnu/sys/time.h \
   /usr/local/include/hiredis/sds.h \
   /usr/local/include/hiredis/alloc.h \
-  ../include/clit.hpp \
-  /usr/include/c++/11/queue \
-  /usr/include/c++/11/bits/stl_queue.h \
   /usr/include/termios.h \
   /usr/include/x86_64-linux-gnu/bits/termios.h \
   /usr/include/x86_64-linux-gnu/bits/termios-struct.h \
@@ -5303,7 +5300,10 @@ CMakeFiles/client.dir/src/sign.cpp.o: ../src/sign.cpp \
   /usr/include/x86_64-linux-gnu/bits/termios-c_lflag.h \
   /usr/include/x86_64-linux-gnu/bits/termios-tcflow.h \
   /usr/include/x86_64-linux-gnu/bits/termios-misc.h \
-  /usr/include/x86_64-linux-gnu/sys/ttydefaults.h
+  /usr/include/x86_64-linux-gnu/sys/ttydefaults.h \
+  ../include/clit.hpp \
+  /usr/include/c++/11/queue \
+  /usr/include/c++/11/bits/stl_queue.h
 
 
 ../src/manmage_menu.cpp:
@@ -5315,6 +5315,8 @@ CMakeFiles/client.dir/src/sign.cpp.o: ../src/sign.cpp \
 ../src/Printf.cpp:
 
 ../src/Group_menu.cpp:
+
+../include/clit.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/termios-misc.h:
 
@@ -5329,8 +5331,6 @@ CMakeFiles/client.dir/src/sign.cpp.o: ../src/sign.cpp \
 /usr/include/x86_64-linux-gnu/bits/termios-c_iflag.h:
 
 /usr/include/termios.h:
-
-../include/clit.hpp:
 
 /usr/local/include/hiredis/alloc.h:
 

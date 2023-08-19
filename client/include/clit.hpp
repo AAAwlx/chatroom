@@ -125,6 +125,8 @@ public:
     //文件收发
     void file_menu(string ID);
     void file_recv(string ID);
-    void file_send(string ID);
+    void file_send1(string ID);//好友文件
+    void file_send2(string ID);//群文件
+
 };
 #endif

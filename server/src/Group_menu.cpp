@@ -366,15 +366,18 @@ void Server::history_group(int cfd)
     Massage m(s);
     string ID = m.Deserialization("ID");
     string groupid = m.Deserialization("groupid");
+    cout<<"111"<<endl;
     User u(ID, Library);
     if (!u.group_List.isMember(groupid))
     {
         r = "NULL";
-    }
-    else
+    }else if(u.group_List[groupid].asInt() == 0){
+        r = "H";
+        cout<<"222"<<endl;
+    }else
     {
-        Group g(ID, Library);
-
+        Group g(groupid, Library);
+        cout << "333" << endl;
         if (g.member_List.isMember(ID))
         {
             redisReply *reply = (redisReply *)redisCommand(Library, "LRANGE %s 0 -1", groupid.c_str());

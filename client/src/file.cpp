@@ -1,21 +1,11 @@
-#include "public.hpp"
-#include "clit.hpp"
-void Clenit::file_send(string ID)
+#include "../include/public.hpp"
+#include "../include/clit.hpp"
+void Clenit::file_send1(string ID)
 {
-    string path, file_flag;
+    string path,option;
     struct stat statbuf;
     cout << "请输入你要传输的文件的路径" << endl;
     cin >> path;
-    cout << "是否为重传文件(输入0为否，1为是)" << endl;
-    while (1)
-    {
-        cin >> file_flag;
-        if (file_flag == "0" || file_flag == "1")
-        {
-            break;
-        }
-        cout << "您输入的选项不符合规范" << endl;
-    }
     while (1)
     {
         if (stat(path.c_str(), &statbuf) == -1)
@@ -38,13 +28,30 @@ void Clenit::file_send(string ID)
     cout << "请输入你的传输对象的id号" << endl;
     string to_id;
     cin >> to_id;
+    while (1)
+    {
+        if (to_id[0] == '1')
+        {
+            option = SEND_FILE;
+            break;
+        }
+        else if (to_id[0] == '2')
+        {
+            option = "3";
+            break;
+        }
+        else
+        {
+            cout << "发送对象无效" << endl;
+        }
+    }
+
     Value j;
     j["filename"] = fliename;
     j["ID"] = ID;
     j["to_id"] = to_id;
     j["filesize"] = to_string(filesize);
-    j["file_flag"] = file_flag;
-    Massage m(SEND_FILE, j, "0", "0");
+    Massage m(option, j, "0", "0");
     Err::sendMsg(cfd, m.Serialization().c_str(), m.Serialization().length());
     std::unique_lock<std::mutex> lock(qmutex);
     queueCondVar.wait(lock, []
@@ -55,31 +62,13 @@ void Clenit::file_send(string ID)
     std::cout << s << endl;
     Massage m1(s);
     string r = m1.Deserialization("return");
-    int sss;
+
     if (r == "NULL")
     {
-        cout << "你还未与发送对象建立连系" << endl;
+        cout << "你还未与该对象建立联系" << endl;
         return;
     }
-    else if (r == "not")
-    {
-        cout << "未完整传输列表没有你想要重传的文件" << endl;
-
-        return;
-    }
-    else if (r == "Succeed")
-    {
-        if (file_flag == "1")
-        {
-            sss = stoi(m1.Deserialization("lssk")); // 若为重传文件则从需要重新读的地方开始读
-        }
-        else
-        {
-            sss = 0;
-        }
-    }
-    std::cout << sss << endl;
-    off_t offset = sss;
+    off_t offset = 0;
     cout << "文件传输开始，请耐心等待" << endl;
     ssize_t sent;
     while (true)
@@ -87,14 +76,16 @@ void Clenit::file_send(string ID)
         sent = sendfile(cfd, fp, &offset, filesize);
         if (sent == -1)
         {
-            if (errno == EAGAIN || errno == EWOULDBLOCK) {
+            if (errno == EAGAIN || errno == EWOULDBLOCK)
+            {
                 continue;
-            } else {
+            }
+            else
+            {
                 perror("Error sending data");
                 break;
             }
         }
-        //offset += sent;
         if (offset >= filesize)
         {
             break;
@@ -103,14 +94,34 @@ void Clenit::file_send(string ID)
     Err::Close(fp);
     cout << "传输完成" << endl;
 }
+            
+
 void Clenit::file_recv(string ID)
 {
-
-    cout << "进入文件接收界面" << endl;
     Value j;
+    cout << "进入文件接收界面，请选择接收好友文件（1）接收群文件(2)" << endl;
+    while (1)
+    {
+        string in;
+        cin>>in;
+        if (in != "1" && in != "2"){
+            cout<< "输入不符合规范" <<endl;
+        }else if (in == "1"){
+            j["o"] = "f";
+            break;
+        }else if (in == "2")
+        {
+            cout << "请输入你要查看的群id" << endl;
+            string groupid;
+            cin >> groupid;
+            j["groupid"] = groupid;
+            j["o"] = "g";
+            break;
+        }
+    }   
     j["id"] = ID;
     Massage m(RECV_FILE, j, "0", "0");
-    Err::sendMsg(cfd, m.Serialization().c_str(), m.Serialization().length());
+    Err::sendMsg(cfd, m.Serialization().c_str(), m.Serialization().length()); // 向服务器发送接收文件请求
     std::unique_lock<std::mutex> lock1(qmutex);
     queueCondVar.wait(lock1, []
                       { return !masqueue.empty(); });
@@ -122,12 +133,20 @@ void Clenit::file_recv(string ID)
     std::variant<Json::Value, std::string> result = m1.takeMassage("content");
     Value flist = std::get<Json::Value>(result);
     Json::Value::Members members = flist.getMemberNames();
+    if (flist.empty())
+    {
+        cout << "你没有要接收的文件" << endl;
+        return;
+    }else if(m1.Deserialization("return") == "nogroup"){
+        cout<<"你还未加入该群"<<endl;
+        return;
+    }
     for (const auto &key : flist.getMemberNames())
     {
-        std::cout << "文件" << key << "来自" << flist[key].asString() << std::endl;
+        std::cout << "文件：" << key << "大小：" << flist[key].asString() << std::endl;
     }
     Value j1;
-    cout<< "请选择你要接收的文件" << endl;
+    cout << "请选择你要接收的文件" << endl;
     string name;
     while (1)
     {
@@ -135,12 +154,15 @@ void Clenit::file_recv(string ID)
         if (!flist.isMember(name))
         {
             cout << "文件列表中没有你要接收的文件,请重新输入" << endl;
-        }else{
+        }
+        else
+        {
             cout << "文件选择成功" << endl;
             break;
         }
     }
     j1["filename"] = name;
+    j1["filesize"] = flist[name].asString();
     Massage m2(RECV_FILE, j1, "0", "0");
     Err::sendMsg(cfd, m2.Serialization().c_str(), m2.Serialization().length());
     std::unique_lock<std::mutex> lock2(qmutex);
@@ -151,13 +173,13 @@ void Clenit::file_recv(string ID)
     qmutex.unlock();
     Massage m3(s1);
     string r = m3.Deserialization("return");
-    if(r == "succeed")
+    if (r == "succeed")
     {
         cout << "请输入你要保存文件的路径" << endl;
         string filesize = m3.Deserialization("filesize");
         string path;
         cin >> path;
-        path=path+"/"+name;
+        path = path + "/" + name;
         int fd;
         while (1)
         {
@@ -166,7 +188,7 @@ void Clenit::file_recv(string ID)
             {
                 cout << "无效的路径,请重新选择" << endl;
                 cin >> path;
-                path+=name;
+                path += name;
             }
             else
             {
@@ -177,10 +199,10 @@ void Clenit::file_recv(string ID)
         long sum = 0;
         long sum2 = 0;
         qmutex.lock();
-        char recvbuf[BUFSIZ];
-        Err::sendMsg(cfd,"0",sizeof("0"));
+        char recvbuf[BUFSIZ * 8];
+        Err::sendMsg(cfd, "0", sizeof("0"));
         while (true)
-        { 
+        {
             if ((ret = read(cfd, recvbuf, sizeof(recvbuf))) > 0)
             {
                 if (ret > 0)
@@ -209,7 +231,6 @@ void Clenit::file_recv(string ID)
         qmutex.unlock();
         queueCondVar.notify_one();
     }
-    
 }
 void Clenit::file_menu(string ID)
 {
@@ -220,7 +241,7 @@ void Clenit::file_menu(string ID)
         cout << "|     ChatRoom     |" << endl;
         cout << "+------------------+" << endl;
         cout << "|                  |" << endl;
-        cout << "|    1:文件发送    |" << endl;
+        cout << "|    1:发送文件    |" << endl;
         cout << "|    2.文件接收    |" << endl;
         cout << "|    0:退出界面    |" << endl;
         cout << "|                  |" << endl;
@@ -229,7 +250,7 @@ void Clenit::file_menu(string ID)
         system("clear");
         if (in == SEND_FILE)
         {
-            file_send(ID);
+            file_send1(ID);
         }
         else if (in == RECV_FILE)
         {

@@ -307,9 +307,7 @@ CMakeFiles/client.dir/src/Group_menu.cpp.o: \
  /usr/local/include/hiredis/read.h \
  /usr/include/x86_64-linux-gnu/sys/time.h \
  /usr/local/include/hiredis/sds.h /usr/local/include/hiredis/alloc.h \
- /home/wlx/chatroom-wlx/client/include/clit.hpp /usr/include/c++/11/queue \
- /usr/include/c++/11/bits/stl_queue.h /usr/include/termios.h \
- /usr/include/x86_64-linux-gnu/bits/termios.h \
+ /usr/include/termios.h /usr/include/x86_64-linux-gnu/bits/termios.h \
  /usr/include/x86_64-linux-gnu/bits/termios-struct.h \
  /usr/include/x86_64-linux-gnu/bits/termios-c_cc.h \
  /usr/include/x86_64-linux-gnu/bits/termios-c_iflag.h \
@@ -319,4 +317,6 @@ CMakeFiles/client.dir/src/Group_menu.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/termios-c_lflag.h \
  /usr/include/x86_64-linux-gnu/bits/termios-tcflow.h \
  /usr/include/x86_64-linux-gnu/bits/termios-misc.h \
- /usr/include/x86_64-linux-gnu/sys/ttydefaults.h
+ /usr/include/x86_64-linux-gnu/sys/ttydefaults.h \
+ /home/wlx/chatroom-wlx/client/include/clit.hpp /usr/include/c++/11/queue \
+ /usr/include/c++/11/bits/stl_queue.h

@@ -4,8 +4,8 @@ std::mutex qmutex;
 std::queue<string> masqueue;
 std::condition_variable queueCondVar;
 bool f_flag;
-bool g_flag;
-bool m_flag;
+bool g_flag = true;
+bool m_flag = true;
 std::condition_variable recVar;
 std::mutex rmutex;
 Clenit::Clenit(int port, string ip)

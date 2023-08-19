@@ -63,5 +63,6 @@
         "thread": "cpp",
         "typeinfo": "cpp",
         "variant": "cpp"
-    }
+    },
+    "cmake.sourceDirectory": "/home/wlx/chatroom-wlx/client"
 }

@@ -15,10 +15,9 @@ Server::Server(int port, string ip)
     : server_port(port), server_ip(ip)
 {
 }
-void Server::thread_work(int clie_fd)
+void Server::thread_work(int clie_fd) 
 {
     bool exit = false;
-    // bool main_menu_in = false;
     // 菜单
     while (true)
     {
@@ -27,12 +26,12 @@ void Server::thread_work(int clie_fd)
         if (exit)
         {
             fd_pthread[clie_fd] = false;
-
+            
             pthread_exit((void *)"客户端关闭");
         }
         // 主页面
     }
-
+    cout << "线程退出" <<endl;
     return;
 }
 
@@ -43,6 +42,7 @@ vector<bool> Server::fd_new(1000, false);
 vector<string> Server::fd_ID(1000, "0");
 vector<int> Server::fd_bor(1000, 0);
 std::unordered_map<std::string, int> user_cfd;
+//std::unordered_map<int ,std::thread::id> cfd_pid;
 std::atomic<int> cfd;
 int user_ID;
 void Server::serun()
@@ -73,7 +73,7 @@ void Server::serun()
     int efd;
     efd = Err::Epoll_create(EP0LL_SIZE);
     struct epoll_event tep, ep[EP0LL_SIZE];
-    tep.events = EPOLLIN | EPOLLOUT | EPOLLHUP; // 设置ET模式
+    tep.events = EPOLLIN | EPOLLOUT | EPOLLRDHUP; // 设置ET模式
     tep.data.fd = lfd;
     Err::Epoll_ctl(efd, EPOLL_CTL_ADD, lfd, &(tep));
     while (1)
@@ -127,16 +127,18 @@ void Server::serun()
                 if (!fd_pthread[ep[i].data.fd] && fd_arr[ep[i].data.fd])
                 { // 如果不是监听套接字且没有创建线程
                     int sfd = ep[i].data.fd;
+                    fd_pthread[sfd] = true;
                     thread chile_t(Server::thread_work, sfd); // 当客户端有读写请求时，为他单独开启一个线程
                     cout << "为" << sfd << "创建线程" << endl;
-                    fd_pthread[sfd] = true;
+                    //std::thread::id tid=chile_t.get_id();
+                    //cfd_pid[sfd]=tid;
                     chile_t.detach();
-                }else if ((ep[i].events & EPOLLHUP) || (ep[i].events & EPOLLERR)) {
+                }else if ((ep[i].events & EPOLLRDHUP) || (ep[i].events & EPOLLERR)) {
                     // 连接关闭或发生错误
                     int closedSocket = ep[i].data.fd;
                     cout << "客户端 " << closedSocket << " 终止。" << endl;
                     Err::Epoll_ctl(efd, EPOLL_CTL_DEL, closedSocket, NULL); // 从 epoll 中移除
-                    Err::Close(closedSocket); // 关闭套接字
+                    //Err::Close(closedSocket); // 关闭套接字
                     fd_arr[closedSocket] = false;
                     fd_pthread[closedSocket] = false;
                     auto it = user_cfd.begin();
@@ -147,6 +149,7 @@ void Server::serun()
                             ++it;
                         }
                     }
+                    
                 }
             }
         }

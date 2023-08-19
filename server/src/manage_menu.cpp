@@ -235,7 +235,7 @@ void Server::man_addmember(int cfd)
     }
     else
     {
-        if (g.member_List.isMember(add_id))
+        if (g.member_List.isMember(add_id)&&u.group_List.isMember(groupid))
         {
             r = "bemember";
         }
@@ -282,6 +282,7 @@ void Server::man_delmember(int cfd)
     string groupid = m.Deserialization("groupid");
     string del_id = m.Deserialization("del_id");
     Group g(groupid, Library);
+    User u(del_id, Library);
     string r;
     if (!g.member_List.isMember(del_id))
     {
@@ -292,6 +293,7 @@ void Server::man_delmember(int cfd)
     else
     {
         g.delete_member(del_id);
+        u.delete_group(groupid);
         r = "Succeed";
         try
         {
@@ -331,7 +333,7 @@ void Server::ignoregroup(int cfd)
     string ID = m.Deserialization("ID");
     User u(ID,Library);
     string r;
-    if(u.group_List[ID].asInt()==0){
+    if(u.group_List[groupid].asInt() == 0){
         r="blocked";
     }else{
         r="Succeed";

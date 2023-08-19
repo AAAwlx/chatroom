@@ -31,6 +31,7 @@
 #include<hiredis/hiredis.h>
 #include <condition_variable>
 #include <variant>
+#include <termios.h>
 #define Epoll_size 500
 #define SERVERPORT 8888
 #define BUFFERSIZE 500//单个消息不能超过五百字

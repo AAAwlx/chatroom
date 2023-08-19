@@ -145,8 +145,15 @@ int Err::readn(int fd, char* buf, int size)
     {
         int len = recv(fd, pt, count, 0);
         if (len == -1)
-        {
-            return -1;
+        { 
+            if (errno == EAGAIN || errno == EWOULDBLOCK)
+            {
+                continue;
+            }else{
+                pthread_exit((void *)"客户端关闭");
+                cout<<"关闭线程"<<endl;
+                close(cfd);
+            }
         }
         else if (len == 0)
         {

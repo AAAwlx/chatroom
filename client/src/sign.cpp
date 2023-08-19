@@ -20,6 +20,7 @@ int Clenit::login()
             break;
         }
     }
+    //setEcho(false);
     std::cout << "请输入您的密码" << endl;
     std::cin >> Pass1;
     while (1)
@@ -34,6 +35,7 @@ int Clenit::login()
             break;
         }
     }
+    //setEcho(true);
     info["ID"] = Id;
 
     Massage m1(LOGIN, info, "0", "0");
